@@ -1,0 +1,5 @@
+crewai==0.1
+ai-characters==0.2
+python-dotenv==1.0
+anthropic==0.21
+langchain-anthropic==0.1
