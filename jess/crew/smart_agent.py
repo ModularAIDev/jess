@@ -1,9 +1,9 @@
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from crewai import Agent
 
 
-def create_smart_agent():
+def create_smart_agent(verbose=True):
     load_dotenv()
     llm = ChatOpenAI(model_name="gpt-4-turbo-preview")
     
@@ -13,6 +13,6 @@ def create_smart_agent():
         backstory="You are a genius, you know everything. You are here to help the user.",
         tools=[],
         llm=llm,
-        verbose=True,
+        verbose=verbose,
         allow_delegation=True
     )
