@@ -1,8 +1,9 @@
 crewai==0.22.5
-ai-characters==0.2.1
+ai-characters==1.1.0
 python-dotenv==1.0
 anthropic==0.21
-langchain-anthropic==0.1
+langchain-anthropic==0.1.4
 langchain-openai==0.0.5
 crewai-tools==0.1
 python-telegram-bot==20.6
+alpaca-py==0.20.1
