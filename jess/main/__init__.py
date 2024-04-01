@@ -16,12 +16,14 @@ def create_jess_agent(verbose=True):
     llm = ChatAnthropic(model_name="claude-3-sonnet-20240229")
     # llm = ChatAnthropic(temperature=0, model_name="claude-3-opus-20240229")
     goal = "Provide support to the user, in whatever user might need"
-    return load_agent(jess_character_id, llm, goal=goal)
+    jess = load_agent(jess_character_id, llm, goal=goal)
+    jess.allow_delegation = True
+    return jess
 
 
 def create_answer_task(agent, question):
     return Task(description=dedent(f"""
-        As a support person, answer user to the input question: {question}
+        As a support person, you have full dump of your previosue dialog with the user, you need to answer on the most latest message from the dialog, you can use any knowledge/context from dialog that is needed: {question}
         """),
          expected_output="Answer to the question",
     agent=agent)

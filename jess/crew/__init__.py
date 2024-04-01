@@ -3,7 +3,7 @@ from jess.crew.smart_agent import create_smart_agent
 from jess.crew.date_time_agent import create_datetime_agent
 from aic import load_agent
 from langchain_openai import ChatOpenAI
-from crewai import Crew
+from crewai import Crew, Process
 
 from langchain_anthropic import ChatAnthropic
 from dotenv import load_dotenv
@@ -26,9 +26,10 @@ def create_crew_for_question(question, verbose=True):
         load_broker_agent()
       ],
       tasks=[answer_task],
-      verbose=verbose,
-      allow_delegation=True,
-      manager_llm=llm
+      verbose=2,
+      allow_delegation=True
+      #manager_llm=llm,
+      #process=Process.hierarchical
     )
 
 

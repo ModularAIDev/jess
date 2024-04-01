@@ -24,9 +24,9 @@ async def message(update, context):
     if update and update.message and str(update.message.chat_id) != str(chat_id):
         return
     messages_history = PER_USER_MESSAGES.get(update.message.chat_id, [])
+    messages_history.append(f"user message: {update.message.text}")
     full_message = "\n".join(messages_history)
     answer = create_crew_for_question(full_message).kickoff()
-    messages_history.append(f"user message: {update.message.text}")
     messages_history.append(f"jess: {answer}")
     if len(messages_history) > PER_USER_MESSAGES_LIMIT:
         messages_history = messages_history[-2:]
