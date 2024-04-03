@@ -7,7 +7,7 @@ import os
 
 load_dotenv()
 
-chat_id = os.getenv('TELEGRAM_CHAT_ID')
+chat_ids = [str(id) for id in os.getenv('TELEGRAM_CHAT_IDS').split(',')]
 telegram_token = os.getenv('TELEGRAM_TOKEN')
 
 PER_USER_MESSAGES = {}
@@ -15,13 +15,13 @@ PER_USER_MESSAGES_LIMIT = 100
 
 
 async def start(update, context):
-    if str(update.message.chat_id) != str(chat_id):
+    if str(update.message.chat_id) not in chat_ids:
         return
     await update.message.reply_text('One sec, warming up.')
 
 
 async def message(update, context):
-    if update and update.message and str(update.message.chat_id) != str(chat_id):
+    if update and update.message and str(update.message.chat_id) not in chat_ids:
         return
     messages_history = PER_USER_MESSAGES.get(update.message.chat_id, [])
     messages_history.append(f"user message: {update.message.text}")
@@ -32,7 +32,6 @@ async def message(update, context):
         messages_history = messages_history[-2:]
     PER_USER_MESSAGES[update.message.chat_id] = messages_history
     await update.message.reply_text(answer)
-    # send_message(chat_id, answer)
 
 
 async def get_chat_id(update, context):

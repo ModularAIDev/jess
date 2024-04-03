@@ -1,6 +1,5 @@
 from jess.main import create_jess_agent, create_answer_task
 from jess.crew.smart_agent import create_smart_agent
-from jess.crew.date_time_agent import create_datetime_agent
 from aic import load_agent
 from langchain_openai import ChatOpenAI
 from crewai import Crew, Process
@@ -14,15 +13,16 @@ from ._tmp_alpaca import print_buying_power
 def create_crew_for_question(question, verbose=True):
     load_dotenv()
     jess_agent = create_jess_agent()
-    smart_agent = create_smart_agent()
-    datetime_agent = create_datetime_agent()
+    print(jess_agent.tools)
+    #print(jess_agent.tools)
+    #smart_agent = create_smart_agent()
+    #datetime_agent = create_datetime_agent()
     answer_task = create_answer_task(jess_agent, question)
-    llm = ChatAnthropic(model_name="claude-3-sonnet-20240229")
+    #llm = ChatAnthropic(model_name="claude-3-sonnet-20240229")
 
     return Crew(
       agents=[
         jess_agent,
-        datetime_agent,
         load_broker_agent()
       ],
       tasks=[answer_task],

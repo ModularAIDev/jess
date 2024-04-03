@@ -17,7 +17,6 @@ def create_jess_agent(verbose=True):
     # llm = ChatAnthropic(temperature=0, model_name="claude-3-opus-20240229")
     goal = "Provide support to the user, in whatever user might need"
     jess = load_agent(jess_character_id, llm, goal=goal)
-    jess.allow_delegation = True
     return jess
 
 
