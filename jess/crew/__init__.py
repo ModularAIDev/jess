@@ -40,4 +40,4 @@ def load_broker_agent():
         "broker", 
         llm, 
         goal="Broker that has access to all financial user details (buying power), can help with anything related to user financial situation",
-        tools=[])
+        tools=[get_buying_power])
