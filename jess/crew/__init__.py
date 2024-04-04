@@ -3,11 +3,12 @@ from jess.crew.smart_agent import create_smart_agent
 from aic import load_agent
 from langchain_openai import ChatOpenAI
 from crewai import Crew, Process
+from dotenv import load_dotenv
+load_dotenv()
 
 from langchain_anthropic import ChatAnthropic
 from dotenv import load_dotenv
-
-from ._tmp_alpaca import print_buying_power
+from aic_tools_alpaca.account_info import get_buying_power
 
 
 def create_crew_for_question(question, verbose=True):
@@ -39,4 +40,4 @@ def load_broker_agent():
         "broker", 
         llm, 
         goal="Broker that has access to all financial user details (buying power), can help with anything related to user financial situation",
-        tools=[print_buying_power])
+        tools=[])

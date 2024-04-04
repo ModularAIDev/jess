@@ -7,3 +7,4 @@ langchain-openai==0.0.5
 crewai-tools==0.1
 python-telegram-bot==20.6
 alpaca-py==0.20.1
+aic_tools_alpaca==0.0.3
