@@ -4,6 +4,7 @@ from aic import load_agent
 from crewai import Task
 from dotenv import load_dotenv
 from textwrap import dedent
+from langchain.llms import Ollama
 
 
 def create_jess_agent(verbose=True):
@@ -15,8 +16,10 @@ def create_jess_agent(verbose=True):
     
     llm = ChatAnthropic(model_name="claude-3-sonnet-20240229")
     # llm = ChatAnthropic(temperature=0, model_name="claude-3-opus-20240229")
+
+    ollama_openhermes = Ollama(model="mistral:7b-text-q8_0")
     goal = "Provide support to the user, in whatever user might need"
-    jess = load_agent(jess_character_id, llm, goal=goal)
+    jess = load_agent(jess_character_id, llm, goal=goal, verbose=verbose)
     return jess
 
 
