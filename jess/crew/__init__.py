@@ -42,9 +42,9 @@ def create_crew_for_question(question, verbose=True):
     return Crew(
       agents=[
         jess_agent,
-        load_broker_agent(),
-        load_knowledge_keeper_agent(),
-        load_fs_agent()
+        load_broker_agent()
+        #load_knowledge_keeper_agent(),
+        #load_fs_agent()
       ],
       tasks=[answer_task],
       verbose=verbose,
