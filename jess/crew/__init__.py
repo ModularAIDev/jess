@@ -2,10 +2,12 @@ from jess.main import create_jess_agent, create_answer_task
 from jess.crew.smart_agent import create_smart_agent
 from aic import load_agent
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from crewai import Crew, Process
 from dotenv import load_dotenv
 from aic_tools_pinecone import init_toolbox_with_gptembeddings, query_from_long_term_memory, store_in_long_term_memory
 from openai import OpenAI
+from langchain.llms import Ollama
 
 import os
 import pinecone
@@ -18,6 +20,7 @@ from aic_tools_alpaca.account_info import get_buying_power
 
 PINECONE_KEY = os.getenv('PINECONE_KEY')
 USER_ID = "113685807430823249126"
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 client = OpenAI()
 
@@ -40,7 +43,8 @@ def create_crew_for_question(question, verbose=True):
       agents=[
         jess_agent,
         load_broker_agent(),
-        load_knowledge_keeper_agent()
+        load_knowledge_keeper_agent(),
+        load_fs_agent()
       ],
       tasks=[answer_task],
       verbose=verbose,
@@ -58,8 +62,20 @@ def load_broker_agent():
         goal="Broker that has access to all financial user details (buying power), can help with anything related to user financial situation",
         tools=[get_buying_power])
 
+
+def load_fs_agent():
+    # llm = Ollama(model="mistral:7b-text-q8_0")
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY)
+    #llm = ChatOpenAI(model_name="gpt-3.5-turbo-0125")
+    return load_agent(
+        "fs", 
+        llm, 
+        goal="FileSistem Agent allows to read and interact with the file system, doing operations like read, write, delete files")
+
+
 def load_knowledge_keeper_agent():
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo-0125")
+    # llm = ChatOpenAI(model_name="gpt-3.5-turbo-0125")
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=GOOGLE_API_KEY)
     return load_agent(
         "KnowledgeKeeper", 
         llm, 
